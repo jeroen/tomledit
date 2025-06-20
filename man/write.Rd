@@ -5,14 +5,16 @@
 \alias{to_toml}
 \title{Generate TOML}
 \usage{
-write_toml(x, file)
+write_toml(x, file, format = TRUE)
 
-to_toml(x)
+to_toml(x, format = TRUE)
 }
 \arguments{
 \item{x}{an object of class \code{Toml}.}
 
 \item{file}{path to the file to  write.}
+
+\item{format}{whether to format the TOML output.}
 }
 \value{
 \code{write_toml()} returns a \code{Toml} object invisibly. \code{to_toml()} returns a string.
