@@ -12,8 +12,3 @@
     Output
       [1] "a_long_array = [\n  \"a long array\",\n  \"with enough values\",\n  \"to test formatting\",\n  \"that should be broken over multiple lines\",\n]\na_short_array = [\"a short array\", \"that doesn't break\"]\n"
 
----
-
-    Code
-      
-
