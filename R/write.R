@@ -6,6 +6,7 @@
 #'
 #' @inheritParams insert_items
 #' @param file path to the file to  write.
+#' @param format whether to format the TOML output.
 #' @export
 #' @rdname write
 #' @returns `write_toml()` returns a `Toml` object invisibly. `to_toml()` returns a string.
@@ -20,14 +21,17 @@
 #' write_toml(x, tmp)
 #' read_toml(tmp)
 #' to_toml(x)
-write_toml <- function(x, file) {
-  .catch(x$write(file))
+write_toml <- function(x, file, format = TRUE) {
+  if (!is.logical(format)) {
+    stop("fmt must be TRUE or FALSE", call. = FALSE)
+  }
+  .catch(x$write(file, format))
   invisible(x)
 }
 
 
 #' @export
 #' @rdname write
-to_toml <- function(x) {
-  .catch(x$format())
+to_toml <- function(x, format = TRUE) {
+  .catch(x$format(format))
 }

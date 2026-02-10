@@ -1,9 +1,12 @@
 Package: tomledit
 Title: Parse, Read, and Edit 'TOML'
-Version: 0.1.1
+Version: 0.1.1.9000
 Authors@R: 
+    c(
     person("Josiah", "Parry", , "josiah.parry@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-9910-865X"))
+           comment = c(ORCID = "0000-0001-9910-865X")),
+    person("Devin", "Pastoor", , "devin.pastoor@gmail.com", role = "ctb")
+    )
 Description: A toolkit for working with 'TOML' files in R while preserving
     formatting, comments, and structure. 'tomledit' enables serialization of R
     objects such as lists, data.frames, numeric, logical, and date vectors.
@@ -12,7 +15,7 @@ Encoding: UTF-8
 Language: en
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Config/rextendr/version: 0.3.1.9001
+Config/rextendr/version: 0.4.1
 SystemRequirements: Cargo (Rust's package manager), rustc
 Depends:
     R (>= 4.2)
@@ -20,3 +23,6 @@ Imports:
     rlang (>= 1.1.0)
 URL: https://extendr.github.io/tomledit/, https://github.com/extendr/tomledit
 BugReports: https://github.com/extendr/tomledit/issues
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

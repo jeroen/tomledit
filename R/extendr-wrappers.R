@@ -18,11 +18,11 @@ Toml$parse_toml <- function(x) .Call(wrap__Toml__parse_toml, x)
 
 Toml$read <- function(path) .Call(wrap__Toml__read, path)
 
-Toml$write <- function(path) .Call(wrap__Toml__write, self, path)
+Toml$write <- function(path, fmt) .Call(wrap__Toml__write, self, path, fmt)
 
-Toml$format <- function() .Call(wrap__Toml__format, self)
+Toml$format <- function(fmt) .Call(wrap__Toml__format, self, fmt)
 
-Toml$format_lines <- function() .Call(wrap__Toml__format_lines, self)
+Toml$format_lines <- function(fmt) .Call(wrap__Toml__format_lines, self, fmt)
 
 Toml$insert_list <- function(x, df_as_array) .Call(wrap__Toml__insert_list, self, x, df_as_array)
 

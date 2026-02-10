@@ -1,0 +1,7 @@
+a_long_array = [
+  "a long array",
+  "with enough values",
+  "to test formatting",
+  "that should be broken over multiple lines",
+]
+a_short_array = ["a short array", "that doesn't break"]

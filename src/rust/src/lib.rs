@@ -51,18 +51,25 @@ impl Toml {
         Self::parse_toml(toml)
     }
 
-    fn write(&self, path: &str) -> Result<()> {
-        let to_write = self.0.to_string();
+    fn write(&self, path: &str, fmt: bool) -> Result<()> {
+
+        let mut to_write = self.0.to_string();
+        if fmt {
+            to_write = taplo::formatter::format(&to_write, taplo::formatter::Options::default());
+        }
         Ok(std::fs::write(path, to_write).map_err(|e| TomlEditRError::OtherError(Box::new(e)))?)
     }
 
-    fn format(&self) -> String {
-        let res = self.0.to_string();
+    fn format(&self, fmt: bool) -> String {
+        let mut res = self.0.to_string();
+         if fmt {
+            res = taplo::formatter::format(&res, taplo::formatter::Options::default());
+        }
         res
     }
 
-    fn format_lines(&mut self) -> Strings {
-        self.format().split("\n").collect::<Strings>()
+    fn format_lines(&mut self, fmt: bool) -> Strings {
+        self.format(fmt).split("\n").collect::<Strings>()
     }
 
     fn insert_list(&self, x: List, df_as_array: bool) -> Result<Self> {
@@ -103,4 +110,51 @@ impl Toml {
 extendr_module! {
     mod tomledit;
     impl Toml;
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_multiline_inline_table() {
+        // Test parsing of multi-line inline tables (TOML 1.1 feature)
+        let toml_str = r#"
+tbl = {
+    key      = "a string",
+    moar-tbl =  {
+        key = 1,
+    },
+}
+"#;
+        let doc = toml_str.parse::<DocumentMut>();
+        assert!(
+            doc.is_ok(),
+            "Failed to parse multi-line inline table: {:?}",
+            doc.err()
+        );
+
+        let doc = doc.unwrap();
+        let tbl = doc.get("tbl");
+        assert!(tbl.is_some(), "Failed to get 'tbl' from document");
+
+        let tbl = tbl.unwrap();
+        let key_value = tbl.get("key");
+        assert!(
+            key_value.is_some(),
+            "Failed to get 'key' from inline table"
+        );
+
+        let moar_tbl = tbl.get("moar-tbl");
+        assert!(
+            moar_tbl.is_some(),
+            "Failed to get 'moar-tbl' from inline table"
+        );
+
+        let nested_key = moar_tbl.unwrap().get("key");
+        assert!(nested_key.is_some(), "Failed to get nested 'key'");
+
+        let nested_value = nested_key.unwrap().as_integer();
+        assert_eq!(nested_value, Some(1), "Nested value should be 1");
+    }
 }

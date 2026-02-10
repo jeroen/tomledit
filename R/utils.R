@@ -1,13 +1,23 @@
 #' @export
 print.Toml <- function(x, ...) {
   cat("<Toml>\n")
-  cat(x$format())
+  dots <- list2(...)
+  if (is.null(dots$format)) {
+    cat(x$format(fmt = TRUE))
+  } else {
+    cat(x$format(fmt = FALSE))
+  }
   invisible(x)
 }
 
 #' @export
 as.character.Toml <- function(x, ...) {
-  .catch(x$format_lines())
+  dots <- list2(...)
+  if (is.null(dots$format)) {
+    .catch(x$format_lines(fmt = TRUE))
+  } else {
+    .catch(x$format_lines(fmt = FALSE))
+  }
 }
 
 
