@@ -14,6 +14,13 @@ extendr-api = { version = "0.8.0", features = ["result_condition"] }
 taplo = "0.13.2"
 toml_edit = { version = "0.24.0" }
 
+# extendr-ffi 0.8.x fails to build for aarch64-pc-windows-gnullvm (Windows ARM64).
+# This pins the upstream commit that added aarch64 support (extendr/extendr#950),
+# which is still version 0.8.0 and otherwise identical to the crates.io release.
+# Remove this once we can upgrade to extendr-api >= 0.9.0.
+[patch.crates-io]
+extendr-ffi = { git = "https://github.com/extendr/extendr", rev = "03e3c0cea77f3bb202792e6cadb5102a62eaeff0" }
+
 [profile.release]
 codegen-units = 1
 lto = true
